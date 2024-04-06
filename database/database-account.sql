@@ -1,6 +1,6 @@
 create database waph_team;
-CREATE USER 'ramiseja'@'localhost' IDENTIFIED BY 'Pa$$w0rd';
-GRANT ALL ON waph.*TO'ramiseja'@'localhost';
+CREATE USER 'team21'@'localhost' IDENTIFIED BY 'Pa$$w0rd';
+GRANT ALL ON waph.*TO'team21'@'localhost';
 
 
 
