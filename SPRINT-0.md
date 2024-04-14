@@ -50,14 +50,26 @@ Formatted and copied code skeleton form Lab3 to team repo waph-team21,commited t
 
 #### Contributions: 
 
-1. Member 1,  Completed creating an organization on github as waph-team21 added professor Dr.Phu Phung and other team members x commits, y hours, contributed in xxx
-2. Member 2, Karthik Pavuluri created a public repository to host team project website, named as waph-team21.github.io x commits, y hours, contributed in xxx
-3. Member 3,Purna Lokesh Reddy Chimalamarri contributed by checking waph-team21.github.io repository by adding index.html template x commits, y hours, contributed in xxx
-4. Chakravarthi Maddi checked out the waph-teamproject and added README.md template, x commits, y hours, contributed in xxx
+1. Member 1,  Completed creating an organization on github as waph-team21 added professor Dr.Phu Phung and other team members 5 commits, 2 hours, contributed in task-1
+2. Member 2, Karthik Pavuluri created a public repository to host team project website, named as waph-team21.github.io 3 commits, 2 hours, contributed in task-2
+3. Member 3,Purna Lokesh Reddy Chimalamarri contributed by checking waph-team21.github.io repository by adding index.html template 3 commits, 2 hours, contributed in task-2
+4. Chakravarthi Maddi checked out the waph-teamproject and added README.md template, 3 commits, 2 hours, contributed in task-2
 
+#### Screenshots:
+- Team21 Login
+![team21 login](Images/team21login.png)
 
+- Member 1
+![member1](Images/suryaindexhtml.png)
 
+- Member 2
+![member2](Images/karthikindex.png)
 
+- Member 3
+![member3](Images/lokeshlogin.png)
+
+- Member 4
+![member4](Images/maddici-index.png)
 
 # Appendix
 
