@@ -8,8 +8,8 @@
 # Team members
 
 1. Jaya Surya Ramisetty, ramiseja@mail.uc.edu
-2. Purna Lokesh Reddy Chimalamarri, chimalpy@mail.uc.edu
-3. Karthik Pavuluri, pavulukk@mail.uc.edu
+2. Karthik Pavuluri, pavulukk@mail.uc.edu
+3. Purna Lokesh Reddy Chimalamarri, chimalpy@mail.uc.edu
 4. Chakravarthi Maddi, maddici@mail.uc.edu
 
 # Project Management Information
@@ -38,7 +38,7 @@ Introduce how your team uses a software management process, e.g., Scrum, and how
 
 ### Sprint 0
 
-Duration: DD/MM/YYYY-DD/MM/YYYY
+Duration: 03/24/24-04/14/24
 
 #### Completed Tasks: 
 
@@ -66,11 +66,12 @@ Formatted and copied code skeleton form Lab3 to team repo waph-team21,commited t
 ![member2](Images/karthikindex.png)
 
 - Member 3
-![member3](Images/lokeshlogin.png)
+![member3](Images/lokeshtesthtml.png)
 
 - Member 4
 ![member4](Images/maddici-index.png)
 
 # Appendix
 
-Include the content (in text, not as images) of the SQL files and all source code of your PHP files (with the file name). 
+We have included the Index.html and aslo created the database in the repository.
+
