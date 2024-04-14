@@ -11,22 +11,22 @@ Your team can revise/add more sections; however, it is highly recommended that y
 
 # Team members
 
-1. Member 1, email
-2. Member 2, email
-3. Member 3, email
-4. Member 4, email
+1. Jaya Surya Ramisetty, ramiseja@mail.uc.edu
+2. Purna Lokesh Reddy Chimalamarri, chimalpy@mail.uc.edu
+3. Karthik Pavuluri, pavulukk@mail.uc.edu
+4. Chakravarthi Maddi, maddici@mail.uc.edu
 
 # Project Management Information
 
-Source code repository (private access): <https://github.com/***>
+Source code repository (private access): (https://github.com/waph-team21/waph-teamproject.git)
 
-Project homepage (public): <https://***.github.io>
+Project homepage (public): (https://github.com/waph-team21/waph-team21.github.io.git)
 
 ## Revision History
 
 | Date       |   Version     |  Description |
 |------------|:-------------:|-------------:|
-| DD/MM/YYYY |  0.0          | Init draft   |
+| 14/04/2024 |  0.0          | Sprint 0  |
 
 
 # Overview
@@ -98,16 +98,18 @@ Duration: DD/MM/YYYY-DD/MM/YYYY
 
 #### Completed Tasks: 
 
-1. Task 1
-2. Task 2
-3. ...
+Task 1
+completed creating SSL Key/certificate and established HTTPS and team localdomain name as waph-team21.minifacebook.com
+Designed teamdatabase as waph_team21  
+Task 2
+Formatted and copied code skeleton form Lab3 to team repo waph-team21,commited the code together with README.md and index.html
 
 #### Contributions: 
 
-1. Member 1, x commits, y hours, contributed in xxx
-2. Member 2, x commits, y hours, contributed in xxx
-3. Member 3, x commits, y hours, contributed in xxx
-4. Member 4, x commits, y hours, contributed in xxx
+1. Member 1,  Completed creating an organization on github as waph-team21 added professor Dr.Phu Phung and other team members x commits, y hours, contributed in xxx
+2. Member 2, Karthik Pavuluri created a public repository to host team project website, named as waph-team21.github.io x commits, y hours, contributed in xxx
+3. Member 3,Purna Lokesh Reddy Chimalamarri contributed by checking waph-team21.github.io repository by adding index.html template x commits, y hours, contributed in xxx
+4. Chakravarthi Maddi checked out the waph-teamproject and added README.md template, x commits, y hours, contributed in xxx
 
 ### Sprint 1
 
