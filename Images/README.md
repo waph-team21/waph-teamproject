@@ -1,2 +1,1 @@
-![karthikimages](../Images/karthikindex.png)
 
