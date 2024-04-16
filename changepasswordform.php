@@ -1,120 +1,133 @@
-<?php
-require "session_auth.php";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>WAPH-Change Password page</title>
+  <meta charset="UTF-8">
+  <title>Change Password - WAPH</title>
   <style>
-    /* Resetting default styles */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    /* Body styles */
     body {
-        font-family: "Roboto", sans-serif;
-        background-color: #f0f0f0;
-        margin: 0;
-        padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
     }
-
-    /* Container styles */
     .container {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 30px;
-        background-color: #fff;
-        border-radius: 12px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
-
-    /* Heading styles */
+    h1 {
+      color: #2196f3;
+    }
     h2 {
-        color: #333;
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 28px;
+      color: #333;
+      margin-bottom: 20px;
     }
-
-    /* Link styles */
-    a {
-        display: inline-block;
-        width: 100%;
-        padding: 14px;
-        margin-bottom: 20px;
-        background-color: #4CAF50;
-        color: #fff;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 6px;
-        transition: background-color 0.3s ease;
+    #digit-clock {
+      font-size: 16px;
+      color: #888;
+      margin-bottom: 20px;
     }
-
-    a:hover {
-        background-color: #45a049;
+    .form {
+      margin-top: 20px;
     }
-
-    /* Primary button styles */
-    .btn-primary {
-        background-color: #4CAF50;
-        color: #fff;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 6px;
-        text-decoration: none;
-        display: inline-block;
-        transition: background-color 0.3s ease;
+    .text_field {
+      width: calc(100% - 24px);
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      box-shadow: none;
+      transition: border-color 0.3s ease;
     }
-
-    .btn-primary:hover {
-        background-color: #45a049;
+    .text_field:focus {
+      border-color: #2196f3;
     }
-
-    /* Danger button styles */
-    .btn-danger {
-        background-color: #f44336;
-        color: #fff;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 6px;
-        text-decoration: none;
-        display: inline-block;
-        transition: background-color 0.3s ease;
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      margin-top: 20px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
-
-    .btn-danger:hover {
-        background-color: #c62828;
+    .button:hover {
+      background-color: #0c7cd5;
+      transform: translateY(-3px);
     }
-</style>
-
+  </style>
   <script type="text/javascript">
       function displayTime() {
-        document.getElementById('digit-clock').innerHTML = "Current time:" + new Date();
+        document.getElementById('digit-clock').innerHTML = "Current time: " + new Date().toLocaleTimeString();
       }
-      setInterval(displayTime,500);
+      setInterval(displayTime, 1000);
   </script>
 </head>
 <body>
   <div class="container">
-    <h1>Change password, WAPH</h1>
+    <h1>Change Password, A MINI FACEBOOK WAPH</h1>
+    <h2>TEAM 21</h2>
     <div id="digit-clock"></div>
-    <?php
-      //some code here
-      echo "Visited time: " . date("Y-m-d h:i:sa");
-      $rand = bin2hex(openssl_random_pseudo_bytes(16));
-      $_SESSION['nocsrftoken'] = $rand;
-    ?>
-    <form action="changepassword.php" method="POST" class="form login">
-      <label for="newpassword">Username:</label>
-      <?php echo htmlentities($_SESSION['username']); ?> <br>
-      <label for="newpassword">Password:</label>
-      <input type="password" class="text_field" name="newpassword" />
-      <input type="hidden" class="text_field" name="nocsrftoken" value="<?php echo $rand; ?>" /> <br>
-      <button class="button" type="submit">Change password</button>
+<?php
+  session_start(); // Start the session to access session variables
+  // Check if the user is logged in
+  echo "<p>Visited time: " . date("Y-m-d h:i:sa") . "</p>";
+  if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === TRUE && isset($_SESSION['username'])) {
+      echo "<p>Logged in as: <strong>" . htmlentities($_SESSION['username']) . "</strong></p>";
+  } else {
+      echo "<p>Not logged in</p>";
+  }
+
+  // Process form submission for changing password
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Database connection details
+    $hostname = 'localhost';
+    $dbUsername = 'team21'; // Replace with your actual database username
+    $dbPassword = 'Pa$$w0rd'; // Replace with your actual database password
+    $dbName = 'waph_team21'; // Replace with your actual database name
+
+    // Retrieve user input
+    $newUsername = $_SESSION["username"];
+    $newPassword = md5($_POST["password"]); // Use md5 hashing for password security
+
+    // Validate user input
+    if(empty($newPassword)) {
+        echo "Please provide a new password.";
+    } else {
+        // Attempt to update password
+        $dbConnection = new mysqli($hostname, $dbUsername, $dbPassword, $dbName);
+        if ($dbConnection->connect_errno) {
+            printf("Database connection failed: %s\n", $dbConnection->connect_error);
+        } else {
+            // Prepare SQL statement for updating password
+            $updateQuery = "UPDATE users SET password = ? WHERE username = ?";
+            $statement = $dbConnection->prepare($updateQuery);
+            $statement->bind_param("ss", $newPassword, $newUsername);
+
+            // Execute the SQL statement
+            if ($statement->execute()) {
+                echo "Password changed successfully! <br>";
+                echo "<a href='form.php'>Login again</a>"; // Display link to login again
+                exit(); // Stop further execution
+            } else {
+                echo "Password change failed. Please try again later.";
+            }
+
+            // Close database connection
+            $dbConnection->close();
+        }
+    }
+  }
+?>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="form login">
+      New Password: <input type="password" class="text_field" name="password" required /> <br>
+      <button class="button" type="submit">Reset Password</button>
     </form>
   </div>
 </body>
