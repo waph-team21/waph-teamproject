@@ -57,19 +57,19 @@ Formatted and copied code skeleton form Lab3 to team repo waph-team21,commited t
 
 #### Screenshots:
 - Team21 Login
-![team21 login](images/team21login.png)
+![team21 login](/Images/team21login.png)
 
 - Member 1
-![member1](images/suryaindexhtml.png)
+![member1](Images/suryaindexhtml.png)
 
 - Member 2
-![member2](images/karthikindex.png)
+![member2](Images/karthikindex.png)
 
 - Member 3
-![member3](images/lokeshtesthtml.png)
+![member3](Images/lokeshtesthtml.png)
 
 - Member 4
-![member4](images/maddici-index.png)
+![member4](Images/maddici-index.png)
 
 # Appendix
 
@@ -144,21 +144,21 @@ Member 4: Chakri Maddi
 
 
 ## Screenshots:
-![pic1](images/newuserlogin.png)
+![pic1](Images/newuserlogin.png)
 
-![pic2](images/newuserdetailsupdatealert.png)
+![pic2](Images/newuserdetailsupdatealert.png)
 
-![pic3](images/newuserregistration.png)
+![pic3](Images/newuserregistration.png)
 
-![pic4](images/postsfromdatabase.png)
-
-
-![pic5](images/newuserlogin.png)
+![pic4](Images/postsfromdatabase.png)
 
 
-![pic6](images/databaseafterupdaing.png)
+![pic5](Images/newuserlogin.png)
 
-![pic7](images/teamdatabasesampleworking.png)
+
+![pic6](Images/databaseafterupdaing.png)
+
+![pic7](Images/teamdatabasesampleworking.png)
 
 
 ## Video demonstration:
