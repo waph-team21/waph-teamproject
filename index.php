@@ -138,6 +138,8 @@ function getUserProfile($username) {
   		return TRUE;
   	return FALSE;
   	}
+
+
 ?>
   <div class="container">
     <h2>Welcome <?php echo htmlentities($_SESSION['username']); ?>!</h2>
@@ -149,6 +151,10 @@ function getUserProfile($username) {
       <a class="button" href="changepasswordform.php">Change Password</a>
       <a class="button" href="updatedetails.php">Change Details</a>
       <a class="button" href="logout.php">Logout</a>
+      <a class="button" href="view_post.php">View Posts</a>
+      <a class="button" href="create_post.php">Create Post</a>
+      <a class="button" href="update_post.php">Update Post</a>
+      <a class="button" href="delete_post.php">Delete Post</a>
     </div>
   </div>
 </body>
