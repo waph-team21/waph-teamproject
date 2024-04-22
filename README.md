@@ -235,15 +235,15 @@ Duration: 04/16/2024-04/22/2024
 6. CSRF protection was implemented for the delete post operation. 7. Server-side prepared statements were implemented to remove posts from the {posts} table.
 
 ## Screenshots:
-![pic1](images/sp2_create.png)
+![pic1](Images/sp2_create.png)
 
-![pic2](images/sp2_delete.png)
+![pic2](Images/sp2_delete.png)
 
-![pic3](images/sp2_menu.png)
+![pic3](Images/sp2_menu.png)
 
-![pic4](images/sp2_update.png)
+![pic4](Images/sp2_update.png)
 
-![pic5](images/sp2_view.png)
+![pic5](Images/sp2_view.png)
 
 #### Sprint Retrospection:
 
