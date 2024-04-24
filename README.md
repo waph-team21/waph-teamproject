@@ -1,4 +1,3 @@
-
 # WAPH-Web Application Programming and Hacking
 
 ## Instructor: Dr. Phu Phung
@@ -18,242 +17,211 @@ Source code repository (private access): (https://github.com/waph-team21/waph-te
 
 Project homepage (public): (https://github.com/waph-team21/waph-team21.github.io.git)
 
-## Revision History
 
-| Date       |   Version     |  Description |
-|------------|:-------------:|-------------:|
-| 14/04/2024 |  0.0          | Sprint 0  |
+# Implementation and demos:
+
+- Anyone can register for an account: 
+
+![p1](Images/final1.png)
+
+- Logged-in users can:
+
+- login:
+  ![p2](Images/final2.png)
+
+- Change password:
+  ![p](Images/final3.png)
+
+-Add a new post:
+ ![p](Images/final4.png)
+ ![p](Images/final4-1.png)
+ 
+- Edit their own posts:
+   ![p](Images/final5.png)
+  ![p](Images/final5-1.png)
+
+- Delete their own posts:
+ ![p](Images/final6.png)
+
+-Add comments on any post, e.g, by their own or others:
+  ![p](Images/final7.png)
+  ![p](Images/final7-1.png)
+
+-Can have real-time chat with others*:
+![p](Images/final8.png)
+![p](Images/final8-1.png)
+
+- Superusers can:
+- Login (with the account added directly in the database):
+  ![p](Images/final9.png)
+  ![p](Images/superuser.png)
+  ![p](Images/final9-1.png)
+
+-View the list of registered users.:
+![p](Images/final9-1.png)
+
+-Disable (not delete) a registered user*:
+![p](Images/final10.png)
+![p](Images/final10-1.png)
+![p](Images/final10-2.png)
+-Enable a registered user*:
+
+![p](Images/final11.png)
+![p](Images/final11-1.png)
+![p](Images/final11-2.png)
+
+# Security and Non-Functional Requirements: 
+
+- the system must be deployed on HTTPS:
+
+  ![p](Images/sf1.png)
 
 
+-Passwords must be hashed in the database and no MySQL root account used for the PHP code:
 
+![p](Images/sf2.png)
 
+- All SQL must be in Prepared Statements:
 
-# Software Process Management
+- Data entered by the user can be separated from the SQL query itself using prepared statements. This is essential for stopping SQL injection attacks, which happen when erroneous SQL code is added to application queries, giving the attacker access to see or change database information.
 
-_(Start from Sprint 0, keep updating)_
-
-Introduce how your team uses a software management process, e.g., Scrum, and how your teamwork collaborates.
-
-## Scrum process
-
-### Sprint 0
-
-Duration: 03/24/24-04/14/24
-
-#### Completed Tasks: 
-
-Task 1
-completed creating SSL Key/certificate and established HTTPS and team localdomain name as waph-team21.minifacebook.com
-Designed teamdatabase as waph_team21  
-Task 2
-Formatted and copied code skeleton form Lab3 to team repo waph-team21,commited the code together with README.md and index.html
-
-#### Contributions: 
-
-1. Member 1,  Completed creating an organization on github as waph-team21 added professor Dr.Phu Phung and other team members 5 commits, 2 hours, contributed in task-1
-2. Member 2, Karthik Pavuluri created a public repository to host team project website, named as waph-team21.github.io 3 commits, 2 hours, contributed in task-2
-3. Member 3,Purna Lokesh Reddy Chimalamarri contributed by checking waph-team21.github.io repository by adding index.html template 3 commits, 2 hours, contributed in task-2
-4. Chakravarthi Maddi checked out the waph-teamproject and added README.md template, 3 commits, 2 hours, contributed in task-2
-
-#### Screenshots:
-- Team21 Login
-![team21 login](/Images/team21login.png)
-
-- Member 1
-![member1](Images/suryaindexhtml.png)
-
-- Member 2
-![member2](Images/karthikindex.png)
-
-- Member 3
-![member3](Images/lokeshtesthtml.png)
-
-- Member 4
-![member4](Images/maddici-index.png)
-
-# Appendix
-
-We have included the Index.html and aslo created the database in the repository.
-
-### Sprint 1
-
-Duration: 03/31/2024-04/22/2024
-
-#### Completed Tasks: 
-1. User Registration: 
-- Created a form for new users to fill out in order to register.
-- Carried out input validation for the registration form both front-end and back-end.
-- Included the logic required to save the registered user's data (password, username, etc.) in the database.
-
-2. User Login: 
-- Provided a form for logged-in users to complete.
-- Validated data on the login form both on the front and back ends.
--Incorporated the logic required to validate the user's credentials against the database.
-- Established session management for users who are logged in.
-
-3. Change Password:
-- Added a functionality that allows users who are logged in to alter their password.
--Validated data on both the front and back ends for the password change form.
-- Included the logic required to update the database with the user's password.
+- ```sql
   
-4. Edit User Profile: 
-- Provided an option for users who are logged in to modify the details (name, extra email address, phone number) in their profiles.
-- Validated input on both the front and back ends of the edit profile form.
-- Included the logic required to update the user's database profile information.
+  $prepared_sql = "INSERT INTO posts (content, author) VALUES (?, ?)"; 
+  $stmt = $mysqli->prepare($prepared_sql);
+  $stmt->bind_param('ss', $content, $author);
+  ```
+- HTML outputs must be sanitized:
 
-5. View Posts:
-- Create a functionality that allows users who are signed in to access posts stored in the database.
-- Used Prepared Statements to retrieve and show the posts from the database.
-- Make that the data is properly sanitized and escaped.
+  ``` sql
+  if (isset($_POST["username"]) and isset($_POST["password"])) {
 
-6. Database Design and Implementation: 
-- Modified the schema of the database to reflect the additional features (posts and user profiles, for example).
-- Added the modified schema and sample data to the database-data.sql file.
+      if (checklogin_mysql($_POST["username"],$_POST["password"])) {
 
+        $_SESSION['authenticated'] = TRUE;
+        $_SESSION['username']= $_POST["username"];
+    //$sanitized_username = htmlspecialchars($_POST['username'])
+      }else{
+        session_destroy();
+        echo "<script>alert('Invalid username/password');window.location='form.php';</script>";
+        die();
+  }
+  }
+  if (!isset($_SESSION['authenticated']) or $_SESSION['authenticated']!= TRUE){
+   session_destroy();
+   echo "<script>alert('you have not login.please login')</script>";
+   header("Refresh: 0; url=form.php");
+   die();
+  }
+  if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    echo "<script>alert('Not authorized. Please login first.'); window.location='form.php';</script>";
+    exit;
+  }
+   ```
 
-#### Contributions: 
+- Role-based access control for registered users and super users:
 
-Member1: Jaya Surya Ramisetty
+Management of sessions:
 
--Implemented the function for user registration.
-- Front-end input validation was used when creating the registration form.
--Managed the database insertion and back-end logic for user registration.
-
-Member 2: Karthik Pavuluri
-- Put the user login function into place.
-- Front-end input validation was used when creating the login form.
--Coordinated the session management and back-end logic for user authentication.
-
-Member 3: Purna Lokesh  Chimalamarri
-- Added the ability for users who are logged in to modify their passwords.
-- A front-end input validation form for changing passwords was created.
-- Managed the database's back-end logic for changing the user's password.
-
-Member 4: Chakri Maddi
-- Added the ability for logged-in users to change their user profiles.
-- Front-end input validation was used when creating the edit profile form.
-- Responsible for the back-end logic for updating the database with the user's profile information.
-
-#### Sprint Retrospection:
-
-
-| Good     |   Could have been better    |  How to improve?  |
-|----------|:---------------------------:|------------------:|
-|Excellent and new understanding of csrf implementation,as well as excellent teamwork|Need to work on styling                             |                   |
+Calling session_start() at the beginning of the code opens a PHP session.
+This enables user-related data to be stored and retrieved by the programme across many pages.
 
 
+Method of authentication:
 
-## Screenshots:
-![pic1](Images/newuserlogin.png)
+The code determines whether the request method—which denotes a form submission—is POST.
+From the POST data, it obtains the password and username that were submitted.
+The given credentials are compared to hardcoded super user credentials.
 
-![pic2](Images/newuserdetailsupdatealert.png)
+Assigning roles:
 
-![pic3](Images/newuserregistration.png)
+The code stores the username and sets session variables to indicate successful authentication if the given credentials match those of the super user:
 
-![pic4](Images/postsfromdatabase.png)
-
-
-![pic5](Images/newuserlogin.png)
-
-
-![pic6](Images/databaseafterupdaing.png)
-
-![pic7](Images/teamdatabasesampleworking.png)
-
-
-## Video demonstration:
-
-[sprint1.webm](https://github.com/waph-team21/waph-team21.github.io/assets/148711687/4d16fdd1-e5f0-46e9-936d-91056923fe70)
-
-
-### Sprint 2:
-
-Duration: 04/16/2024-04/22/2024
-
-#### Completed Tasks: 
+'authenticated' in $_SESSION['] = true;
+$username = $_SESSION['username'];
 
 
 
-1. **Design and Implementation of Databases**
-   - Completed the database architecture for the newly created `posts} and `comments` tables.
-   - Added the CREATE TABLE statements for the new tables to the `database-data.sql` file.
-   - Established the connections between the recently created `posts` and `comments` tables and the current `users` table.
 
-2. **Add New Post**
-   - Developed a front-end form (newpost.php}, for example) that allows users to submit new posts; - Added client-side input validation to the form fields
-   - To manage the form submission, a back-end script (such as `addnewpost.php`) was created.
-   - Using prepared statements, write the PHP code to insert the new post data into the `posts` table.
-   - Added CSRF security to the form submission.
-3.  **view  Posts**
-- To get and show all posts from the `posts` table, a PHP script (such as `viewposts.php}) was created.
-- Prepared statements were then used to query the database and retrieve the post data. 
-- The output was sanitized to prevent XSS vulnerabilities.
+Control of access:
 
-4. **Add Comment**
-- In order to allow users to comment on posts, a front-end form was created (for example, in `viewposts.php}). 
-- Client-side input validation was then implemented for the comment field. PHP code was then written to insert the new comment data into the `comments` database using prepared statements.
--  Added CSRF security to the form submission
-
-5. **Revise/Cancel Post**
-- Created a script that allows logged-in users to edit their own posts.
-- Updated the post data in the posts database with prepared statements by writing PHP code.
-- Implemented input validation and CSRF protection for the edit form.
-- Added CSRF protection to the delete action.
-- Developed a script that enables logged-in users to remove their own posts.
-- Composed the PHP code to remove the post from the posts database using prepared statements.
-
-6. **Access Control**
-- To guarantee that users can only modify or remove their own postings, access control checks were included.
-- Blocked users from reading or editing content that other users had posted.
+After the login process is completed, the code takes the user to dashboard.php.
+To restrict access to only authorised super users, the dashboard page can verify the session variables ($_SESSION['authenticated'] and $_SESSION['username']).
 
 
-#### Contributions: 
+Error management
 
-**Member 1** (Surya Ramisetty)
-1. Completed the `posts` and `comments` tables' database design.
-2. Added the CREATE TABLE statements for the new tables to the `database-data.sql` file.
-3. Added server-side input validation and created the `addnewpost.php` statements needed to enter new posts.
-4. CSRF protection was put into place for the newly submitted post form.
+An error message is saved in the $loginError variable and shown on the login page if the credentials submitted are invalid.
 
-**Member 2** (Karthik Pavuluri)
-1. Developed the `newpost.php` front-end form for new post submissions;
-2. Added client-side input validation to the new post form
-3. Developed the PHP script `viewposts.php` table; 
-4. Put server-side prepared statements into practice to retrieve and show post data; 
-5. Sanitized the output to avoid cross-site scripting vulnerabilities.
 
-**Member 3** (Purna Lokesh Chimalamarri)
-1. Made the front-end comment submission form (inside of `viewposts.php}).
-2. Configured the comment form using client-side input validation.
-3. Created statements for adding additional comments and implemented server-side input validation.
-4. Added CSRF protection to the submission of the comment form
+Results:
 
-**Member 4** (Chakri Maddi)
-1. Wrote the `editpost.php} script to allow for post editing; 2. Added client-side input validation to the edit post form; 3. Added server-side input validation and made statements for post data updates.
-4. CSRF protection was put in place for the edit post form submission.
-5. Developed the `deletepost.php` script to remove postings.
-6. CSRF protection was implemented for the delete post operation. 7. Server-side prepared statements were implemented to remove posts from the {posts} table.
+An HTML form for super user login is generated by the code.
+If there is an error message, it is displayed within the form.
+The form sends the credentials it receives (super_user.php) to the same file for authentication.
+Password hashing: Before being stored in a database, passwords should be salted and hashed to reduce security risks.
+Validating user inputs (password and username) is important to guard against security flaws like SQL injection and cross-site scripting attacks.
+Session management: Additional security mechanisms, such regenerating session IDs following authentication and setting the proper session cookie flags (like HttpOnly, Secure), should be incorporated into session management.
+Database integration: For greater scalability and maintainability, super user credentials should be retrieved from a database rather than being hardcoded.
 
-## Screenshots:
-![pic1](Images/sp2_create.png)
+- A regular user cannot log in as a superuser:
 
-![pic2](Images/sp2_delete.png)
+  A regular user cannot logged in as a superuser because the credentials does not match wth database of the super user login where they cannot edit or post or not even logged in..
+  ![p](Images/final10-1.png)
 
-![pic3](Images/sp2_menu.png)
+- Session Authentication and Hijacking Prevention
 
-![pic4](Images/sp2_update.png)
+  Using session_start(), the code opens a PHP session.
+  The $_SESSION['authenticated'] variable is checked to see if it is set to true.
+  The code uses header("Refresh: 0; url=form.php") to reroute the user to the form.php page for login if they are not authenticated.
+  The code sets the $_SESSION['authenticated'] and $_SESSION['username'] variables with the appropriate values following successful authentication.
 
-![pic5](Images/sp2_view.png)
+-  CSRF Protection
+For critical tasks, CSRF (Cross-Site Request Forgery) protection is usually applied by creating and validating a token.
 
-#### Sprint Retrospection:
+A distinct CSRF token is created at the start of the PHP script and saved in the user's session:
+```php
+<?php
+session_start();
 
-| Good | Could have been better | How to improve? |
-|----------|:---------------------------:|------------------:|
-| Good communication and collaboration within the team | Delayed start on some tasks due to other commitments | Better time management and setting realistic deadlines |
-| Successful implementation of core features (adding/viewing posts, comments) | Code quality and organization could be improved | Establishing  coding standards and guidelines, conducting peer code reviews |
-| Effective use of version control system (Git) | Insufficient testing and debugging | Allocate more time for thorough testing, implement automated tests |
-|  | Incomplete documentation | Assign specific team members for documentation updates after each task |
-|  | Difficulties in integrating individual contributions | Plan integration points and schedule merge meetings regularly |
+// Generate a CSRF token if it doesn't exist
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+```
+Adding a hidden input box containing the CSRF token to forms that carry out sensitive activities (such as updating user information or changing passwords)
+```html
+<form action="update_password.php" method="post">
+    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+    <!-- Form fields -->
+    <input type="submit" value="Update Password">
+</form>
+```
+CSRF token was verified on the server side: The PHP script that manages form submission verified the incoming CSRF token against the session's storage.
+
+- Integrating an open-source front-end CSS template
+HTML Structure: The HTML structure consists of a basic layout with placeholders for action buttons and user data that are dynamic content.
+CSS Styles: These styles specify how elements like as buttons, paragraphs, headers, bodies, and containers look. Additionally, responsive styles (@media query) are included for smaller displays.
+PHP Programme:
+controls authentication and user sessions (session_start()).
+Verifies whether the user is authenticated and logged in.
+uses the getUserProfile function to retrieve user data from the database.
+contains the checklogin_mysql function, which verifies user credentials against a MySQL database.
+prevents session hijacking,
+Integration with Database: To retrieve user data and verify credentials, the PHP code communicates with the waph_team21 MySQL database.
+To stop SQL injection, it makes advantage of prepared statements ($stmt->bind_param).
+
+The code contains the information about the database connection (localhost, team21, Pa$$w0rd,waph_team21).
+
+-A team project website
+[A team project website](https://waph-team21.github.io/form.php)
+(https://waph-team21.minifacebook.com)
+
+
+- Video Demonstration:
+
+  [finalprojectvideo.webm](https://github.com/waph-team21/waph-team21.github.io/assets/148410492/a48ebc0a-fbee-4bae-ad89-c5dfa9a9b4df)
+
 
 
 # Appendix
@@ -261,403 +229,18 @@ Source code repository (private access): (https://github.com/waph-team21/waph-te
 
 Project homepage (public): (https://github.com/waph-team21/waph-team21.github.io.git)
 
-Code for the database-data.sql:
-```sql
+Team website- 
+(https://waph-team21.minifacebook.com)
 
 
 
-DROP TABLE IF EXISTS users;
-
-CREATE TABLE users (
-    username VARCHAR(30) PRIMARY KEY,
-    password VARCHAR(50) NOT NULL,
-    fullname VARCHAR(50) NOT NULL,
-    mail VARCHAR(50) NOT NULL,
-    phone VARCHAR(20),
-    profile_disabled BOOLEAN NOT NULL DEFAULT FALSE
-);
-
-CREATE TABLE superusers (
-    username VARCHAR(255) PRIMARY KEY,
-    password VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    additional_email VARCHAR(255),
-    phone VARCHAR(20),
-    profile_disabled BOOLEAN NOT NULL DEFAULT FALSE
-);
 
 
-CREATE TABLE messages (
-    message_ID SERIAL PRIMARY KEY,
-    content TEXT NOT NULL,
-    type VARCHAR(50),
-    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    sender_username VARCHAR(255),
-    receiver_username VARCHAR(255),
-    FOREIGN KEY (sender_username) REFERENCES users(username),
-    FOREIGN KEY (receiver_username) REFERENCES users(username)
-);
-
-CREATE TABLE posts (
-    post_ID SERIAL PRIMARY KEY,
-    owner VARCHAR(255),
-    content TEXT NOT NULL,
-    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (owner) REFERENCES users(username)
-);
 
 
-CREATE TABLE comments (
-    comment_ID BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    post_ID BIGINT UNSIGNED NOT NULL,  -- Matching type with `post_ID` in `posts`
-    username VARCHAR(255) NOT NULL,
-    comment TEXT NOT NULL,
-    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (post_ID) REFERENCES posts(post_ID)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (username) REFERENCES users(username)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-) ENGINE=InnoDB;
-```
-code for the database-account.sql:
-```sql
-
-CREATE DATABASE IF NOT EXISTS waph_team21;
-DROP USER IF EXISTS 'team21'@'localhost';
-CREATE USER 'team21'@'localhost' IDENTIFIED BY 'Pa$$w0rd';
-GRANT ALL ON waph_team21.* TO 'team21'@'localhost';
-```
-code for index.php:
-```php
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Welcome</title>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 500px;
-      margin: 50px auto;
-      padding: 30px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-    h1 {
-      color: #2196f3;
-    }
-    h2 {
-      color: #333;
-      margin-bottom: 20px;
-    }
-    #digit-clock {
-      font-size: 16px;
-      color: #888;
-      margin-bottom: 20px;
-    }
-    .form {
-      margin-top: 20px;
-    }
-    .text_field {
-      width: calc(100% - 24px);
-      padding: 12px;
-      margin-top: 10px;
-      border: 1px solid #ccc;
-      border-radius: 25px;
-      box-shadow: none;
-      transition: border-color 0.3s ease;
-    }
-    .text_field:focus {
-      border-color: #2196f3;
-    }
-    .button {
-      display: inline-block;
-      padding: 15px 30px;
-      margin-top: 20px;
-      background-color: #2196f3;
-      color: white;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .button:hover {
-      background-color: #0c7cd5;
-      transform: translateY(-3px);
-    }
-  </style>
-</head>
-<body>
-<?php
-    //session_set_cookie_params(15*60,"/","waph-team21.minifacebook.com",TRUE,TRUE);
-	session_start(); 
-	if (isset($_POST["username"]) and isset($_POST["password"])) {
-
-	    if (checklogin_mysql($_POST["username"],$_POST["password"])) {
-
-		    $_SESSION['authenticated'] = TRUE;
-		    $_SESSION['username']= $_POST["username"];
-		//$sanitized_username = htmlspecialchars($_POST['username'])
-	    }else{
-		    session_destroy();
-		    echo "<script>alert('Invalid username/password');window.location='form.php';</script>";
-		    die();
-	}
-}
-	if (!isset($_SESSION['authenticated']) or $_SESSION['authenticated']!= TRUE){
-	 session_destroy();
-	 echo "<script>alert('you have not login.please login')</script>";
-	 header("Refresh: 0; url=form.php");
-	 die();
-	}
-	if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-    echo "<script>alert('Not authorized. Please login first.'); window.location='form.php';</script>";
-    exit;
-}
-
-$userProfile = getUserProfile($_SESSION['username']);
-
-function getUserProfile($username) {
-    $mysqli = new mysqli('localhost', 'team21', 'Pa$$w0rd', 'waph_team21');
-    if ($mysqli->connect_errno) {
-        echo "Database connection failed: " . $mysqli->connect_error;
-        exit();
-    }
-
-    $sql = "SELECT * FROM users WHERE username=?";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    return $result->fetch_assoc();
-}
-	/*if($_SESSION['browser'] != $_SERVER['HTTP_USER_AGENT']){
-		session_destroy();
-		echo "<script>alert('session hijacking attack is detected!');</script>";
-		header("Refresh:0; url=form.php");
-		die();
-	}*/
-
-	/*function checklogin($username, $password) {
-		$account = array("admin","1234");
-		if (($username== $account[0]) and ($password == $account[1])) 
-		  return TRUE;
-		else 
-		  return FALSE;
-  	}*/
-
-  	function checklogin_mysql($username,$password){
-  		$mysqli = new mysqli('localhost','team21','Pa$$w0rd','waph_team21');
-  		if($mysqli->connect_errno){
-  			printf("Database connection failed : %s\n", $mysqli->connect-error);
-  			exit();
-
-  		}
-  	$sql = "SELECT * FROM users WHERE username= ? AND password = md5(?)";
-  	$stmt = $mysqli->prepare($sql);
-  	$stmt->bind_param("ss",$username,$password);
-  	$stmt->execute();
-  	$result=$stmt->get_result();
-  	if($result->num_rows == 1)
-  		return TRUE;
-  	return FALSE;
-  	}
 
 
-?>
-  <div class="container">
-    <h2>Welcome <?php echo htmlentities($_SESSION['username']); ?>!</h2>
-    <p>Email: <?php echo htmlentities($userProfile['email']); ?></p>
-    <p>Name: <?php echo htmlentities($userProfile['name']); ?></p>
-    <p>Phone: <?php echo htmlentities($userProfile['phone']); ?></p>
-
-    <div class="button-container">
-      <a class="button" href="changepasswordform.php">Change Password</a>
-      <a class="button" href="updatedetails.php">Change Details</a>
-      <a class="button" href="logout.php">Logout</a>
-      <a class="button" href="view_post.php">View Posts</a>
-      <a class="button" href="create_post.php">Create Post</a>
-      <a class="button" href="update_post.php">Update Post</a>
-      <a class="button" href="delete_post.php">Delete Post</a>
-    </div>
-  </div>
-</body>
-</html>
-```
-Code for form.php:
-``` php 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Welcome</title>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 500px;
-      margin: 50px auto;
-      padding: 30px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-    h1 {
-      color: #2196f3;
-    }
-    h2 {
-      color: #333;
-      margin-bottom: 20px;
-    }
-    #digit-clock {
-      font-size: 16px;
-      color: #888;
-      margin-bottom: 20px;
-    }
-    .form {
-      margin-top: 20px;
-    }
-    .text_field {
-      width: calc(100% - 24px);
-      padding: 12px;
-      margin-top: 10px;
-      border: 1px solid #ccc;
-      border-radius: 25px;
-      box-shadow: none;
-      transition: border-color 0.3s ease;
-    }
-    .text_field:focus {
-      border-color: #2196f3;
-    }
-    .button {
-      display: inline-block;
-      padding: 15px 30px;
-      margin-top: 20px;
-      background-color: #2196f3;
-      color: white;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .button:hover {
-      background-color: #0c7cd5;
-      transform: translateY(-3px);
-    }
-  </style>
-</head>
-<body>
-<?php
-    //session_set_cookie_params(15*60,"/","waph-team21.minifacebook.com",TRUE,TRUE);
-	session_start(); 
-	if (isset($_POST["username"]) and isset($_POST["password"])) {
-
-	    if (checklogin_mysql($_POST["username"],$_POST["password"])) {
-
-		    $_SESSION['authenticated'] = TRUE;
-		    $_SESSION['username']= $_POST["username"];
-		//$sanitized_username = htmlspecialchars($_POST['username'])
-	    }else{
-		    session_destroy();
-		    echo "<script>alert('Invalid username/password');window.location='form.php';</script>";
-		    die();
-	}
-}
-	if (!isset($_SESSION['authenticated']) or $_SESSION['authenticated']!= TRUE){
-	 session_destroy();
-	 echo "<script>alert('you have not login.please login')</script>";
-	 header("Refresh: 0; url=form.php");
-	 die();
-	}
-	if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-    echo "<script>alert('Not authorized. Please login first.'); window.location='form.php';</script>";
-    exit;
-}
-
-$userProfile = getUserProfile($_SESSION['username']);
-
-function getUserProfile($username) {
-    $mysqli = new mysqli('localhost', 'team21', 'Pa$$w0rd', 'waph_team21');
-    if ($mysqli->connect_errno) {
-        echo "Database connection failed: " . $mysqli->connect_error;
-        exit();
-    }
-
-    $sql = "SELECT * FROM users WHERE username=?";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    return $result->fetch_assoc();
-}
-	/*if($_SESSION['browser'] != $_SERVER['HTTP_USER_AGENT']){
-		session_destroy();
-		echo "<script>alert('session hijacking attack is detected!');</script>";
-		header("Refresh:0; url=form.php");
-		die();
-	}*/
-
-	/*function checklogin($username, $password) {
-		$account = array("admin","1234");
-		if (($username== $account[0]) and ($password == $account[1])) 
-		  return TRUE;
-		else 
-		  return FALSE;
-  	}*/
-
-  	function checklogin_mysql($username,$password){
-  		$mysqli = new mysqli('localhost','team21','Pa$$w0rd','waph_team21');
-  		if($mysqli->connect_errno){
-  			printf("Database connection failed : %s\n", $mysqli->connect-error);
-  			exit();
-
-  		}
-  	$sql = "SELECT * FROM users WHERE username= ? AND password = md5(?)";
-  	$stmt = $mysqli->prepare($sql);
-  	$stmt->bind_param("ss",$username,$password);
-  	$stmt->execute();
-  	$result=$stmt->get_result();
-  	if($result->num_rows == 1)
-  		return TRUE;
-  	return FALSE;
-  	}
 
 
-?>
-  <div class="container">
-    <h2>Welcome <?php echo htmlentities($_SESSION['username']); ?>!</h2>
-    <p>Email: <?php echo htmlentities($userProfile['email']); ?></p>
-    <p>Name: <?php echo htmlentities($userProfile['name']); ?></p>
-    <p>Phone: <?php echo htmlentities($userProfile['phone']); ?></p>
-
-    <div class="button-container">
-      <a class="button" href="changepasswordform.php">Change Password</a>
-      <a class="button" href="updatedetails.php">Change Details</a>
-      <a class="button" href="logout.php">Logout</a>
-      <a class="button" href="view_post.php">View Posts</a>
-      <a class="button" href="create_post.php">Create Post</a>
-      <a class="button" href="update_post.php">Update Post</a>
-      <a class="button" href="delete_post.php">Delete Post</a>
-    </div>
-  </div>
-</body>
-</html>
-
-```
-Video Demonstration for Sprint 2:
-
-[sprint2.webm](https://github.com/waph-team21/waph-team21.github.io/assets/148711687/34b88d78-cdb6-46c9-8ae3-e278c0af2745)
+  
+  
