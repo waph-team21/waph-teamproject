@@ -114,7 +114,7 @@ function getUserProfile($username) {
     $result = $stmt->get_result();
     return $result->fetch_assoc();
 }
-  if($_SESSION['browser'] != $_SERVER['HTTP_USER_AGENT']){
+  /*if($_SESSION['browser'] != $_SERVER['HTTP_USER_AGENT']){
     session_destroy();
     echo "<script>alert('session hijacking attack is detected!');</script>";
     header("Refresh:0; url=form.php");
