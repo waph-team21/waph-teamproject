@@ -124,12 +124,26 @@ function getPostComments($postId) {
         .comments {
             margin-top: 10px;
         }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>View Posts</h2>
-        <button onclick="goBack()">Go Back</button>
+        <a class="button" href="index.php">Go To Homepage</a>
+
         <?php foreach ($userPosts as $post) : ?>
             <div class="post">
                 <h3><?php echo htmlspecialchars($post['title']); ?></h3>

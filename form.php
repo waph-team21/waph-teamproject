@@ -74,14 +74,15 @@
     <h1>A MINIFACEBOOK</h1>
     <h2>BY TEAM21</h2>
     <div id="digit-clock"></div>
-    <?php
+<?php
       echo "Visited time: " . date("Y-m-d h:i:sa");
-    ?>
+?>
     <form action="index.php" method="POST" class="form login">
       <input type="text" class="text_field" name="username" placeholder="Username" required><br>
       <input type="password" class="text_field" name="password" placeholder="Password" required><br>
       <a href="registrationform.php" class="button">Register Here</a>
       <button type="submit" class="button">Login Here</button>
+      <a href="enable_account.php" class="button">Enable Account</a>
     </form>
   </div>
 </body>
